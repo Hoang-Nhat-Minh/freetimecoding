@@ -75,7 +75,7 @@
 @section('js')
   <script>
     window.onload = function() {
-      const apiKey = "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";
+      const apiKey = "";
       const url = "https://api.openai.com/v1/chat/completions";
 
       let messageCount = 0;
