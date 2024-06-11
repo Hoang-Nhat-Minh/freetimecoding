@@ -1,14 +1,16 @@
 @extends('layout')
 
 @section('content')
-  @if (session('alert'))
-    <div class="alert alert-success">
-      {{ session('alert') }}
-    </div>
-  @endif
+  {{-- @if (session('success'))
+    <script>
+      alert('{{ session('success') }}');
+    </script>
+  @endif --}}
   <div class="container m-0 px-5 pt-5">
     <a href="/alpine" class="btn btn-success">Alpine</a>
     <a href="/chat" class="btn btn-success">ChatBot</a>
+    <a href="/chart" class="btn btn-success">Sơ đồ</a>
+    <a href="/textimg" class="btn btn-success">Cool Text</a>
   </div>
   <form method="POST" action="{{ route('store') }}">
     @csrf
@@ -33,10 +35,10 @@
               <td>{{ $item->price }}</td>
               <td>
                 <div class="contrainer d-flex justify-content-center h-100">
-                  <button type="button" class="btn btn-sm btn-success align-self-center" id="min">-</button>
-                  <input class="align-self-center m-2" id="quantity" name="{{ $item->name }}"
+                  <button type="button" class="btn btn-sm btn-success align-self-center min">-</button>
+                  <input class="align-self-center m-2 quantity" name="{{ $item->name }}"
                     data-price="{{ $item->price }}" type="text" style="width:25px" value="0">
-                  <button type="button" class="btn btn-sm btn-success align-self-center" id="inc">+</button>
+                  <button type="button" class="btn btn-sm btn-success align-self-center inc">+</button>
                 </div>
               </td>
             </tr>
@@ -87,7 +89,7 @@
 
 @section('js')
   <script>
-    let items = document.querySelectorAll('#quantity');
+    let items = document.querySelectorAll('.quantity');
 
     for (let i = 0; i < items.length; i++) {
       let item = {
@@ -96,8 +98,8 @@
         price: items[i].getAttribute('data-price')
       }
 
-      let incButton = items[i].parentNode.querySelector('#inc');
-      let decButton = items[i].parentNode.querySelector('#min');
+      let incButton = items[i].parentNode.querySelector('.inc');
+      let decButton = items[i].parentNode.querySelector('.min');
 
       incButton.addEventListener('click', function() {
         item.quantity++;
@@ -133,7 +135,7 @@
 
       function generateOrderString() {
         let orderString = '';
-        for (let i = 0; i < script items.length; i++) {
+        for (let i = 0; i < items.length; i++) {
           if (items[i].value > 0) {
             orderString += items[i].name + '(' + items[i].value + '), ';
           }
@@ -149,14 +151,14 @@
       }
 
       items[i].addEventListener('input', handleInputChange);
-      items[i].parentNode.querySelector('#inc').addEventListener('click', handleInputChange);
-      items[i].parentNode.querySelector('#min').addEventListener('click', handleInputChange);
-    } <
-    />
-  @endsection
+      items[i].parentNode.querySelector('.inc').addEventListener('click', handleInputChange);
+      items[i].parentNode.querySelector('.min').addEventListener('click', handleInputChange);
+    }
+  </script>
+@endsection
 
 
-  {{-- @php
+{{-- @php
   $img_br = \App\Banner::where('status', 'ACTIVE')->where('type', 'breadcrumb')->first();
 @endphp
 @extends('frontend.layouts.default')
@@ -166,7 +168,7 @@
     @if (session('success'))
       <script>
         alert('{{ session('success') }}');
-      </script>
+      </>
     @endif
     <!-- breadcrumb-about-area-start -->
     <div class="breadcrumb-about-area scene p-relative breadcrumb-bg">

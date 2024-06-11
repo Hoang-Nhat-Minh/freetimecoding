@@ -21,12 +21,41 @@ class HomeController extends Controller
         return view('chat');
     }
 
+    public function chart()
+    {
+        $orders = Order::pluck('orders')->toArray();
+
+        $mergedOrders = [];
+        foreach ($orders as $order) {
+            $items = explode(', ', $order);
+            foreach ($items as $item) {
+                list($product, $quantity) = explode('(', rtrim($item, ')'));
+                if (!isset ($mergedOrders[$product])) {
+                    $mergedOrders[$product] = (int) $quantity;
+                } else {
+                    $mergedOrders[$product] += (int) $quantity;
+                }
+            }
+        }
+
+        $productNames = array_keys($mergedOrders);
+        $productQuantities = array_values($mergedOrders);
+
+        return view('chart', ['orders' => json_encode($productNames), 'counts' => json_encode($productQuantities)]);
+    }
+
+
     public function alpine()
     {
         $items = \App\Item::paginate(5);
         return view(('alpine'), [
             'items' => $items,
         ], );
+    }
+
+    public function textimg()
+    {
+        return view('textimg');
     }
 
     public function store(Request $request)
@@ -54,11 +83,12 @@ class HomeController extends Controller
         $order->total = $request->total;
         $order->save();
 
-        // $alert = [
-        //     "type" => "success",
-        //     "title" => __("Thành công"),
-        //     "body" => __("Cảm ơn bạn đã đặt phòng, chúng tôi sẽ sớm phản hồi cho bạn!")
-        // ];
-        return redirect()->back()->with('alert', 'Thành công!');
+        $alert = [
+            "type" => "success",
+            "title" => __("Thành công"),
+            "body" => __("Cảm ơn bạn đã đặt hàng, chúng tôi sẽ sớm phản hồi cho bạn!")
+        ];
+
+        return redirect()->back()->with('alert', $alert);
     }
 }

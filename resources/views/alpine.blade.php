@@ -2,11 +2,6 @@
 
 @section('content')
   <h1 x-data="{ message: 'I ❤️ Alpine' }" x-text="message"></h1>
-  @if (session('alert'))
-    <div class="alert alert-success">
-      {{ session('alert') }}
-    </div>
-  @endif
 
   <form method="POST" action="{{ route('store') }}" x-data="items">
     @csrf
@@ -109,8 +104,6 @@
               this.totalPrice += this.orders[item.name] * item.price;
             }
           }
-          console.log(this.orders);
-          console.log(this.totalPrice);
         },
         formatOrders: function(orders) {
           return Object.entries(orders)

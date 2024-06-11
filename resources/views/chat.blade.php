@@ -2,6 +2,41 @@
 
 @section('head')
   <link rel="stylesheet" href="{{ asset('css/stylechat.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    @font-face {
+      font-family: Neon;
+      src: url('{{ asset('neonfont/neon/NEON____.TTF') }}');
+    }
+
+    #ChatbotText {
+      font-family: Neon;
+      animation: flicker 2s infinite alternate;
+      color: purple;
+    }
+
+    @keyframes flicker {
+
+      0%,
+      18%,
+      22%,
+      25%,
+      53%,
+      57%,
+      100% {
+        text-shadow:
+          0 0 6px #c806cb,
+          0 0 15px #c806cb,
+          0 0 19px #c806cb;
+      }
+
+      20%,
+      24%,
+      55% {
+        text-shadow: none;
+      }
+    }
+  </style>
 @endsection
 
 @section('content')
@@ -13,6 +48,7 @@
             <div class="chat-header clearfix">
               <div class="row">
                 <div class="d-flex justify-content-between">
+                  <h2 id="ChatbotText">Chatbot</h2>
                   <img src="{{ asset('img/bt6vn7g2cXRUsjJn9E.gif') }}" style="height:50px;width:50px"
                     alt="bt6vn7g2cXRUsjJn9E" draggable = "false">
                   <img src="{{ asset('img/full.gif') }}" style="height:50px;width:50px" alt="full"
@@ -39,7 +75,8 @@
             <div class="chat-history" style="background-image: linear-gradient(to right, #e9a4ea 0%, #8b7cff 100%);">
               <ul class="m-b-0">
                 <li class="clearfix">
-                  <div class="message my-message">Xin chào tôi có thể giúp gì cho bạn?</div>
+                  <div class="message my-message animate__animated animate__fadeInUp">Xin chào tôi có thể giúp gì cho bạn?
+                  </div>
                 </li>
               </ul>
             </div>

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/chat', [App\Http\Controllers\HomeController::class, 'chat'])->name('chat');
 Route::get('/alpine', [App\Http\Controllers\HomeController::class, 'alpine'])->name('alpine');
+Route::get('/chart', [App\Http\Controllers\HomeController::class, 'chart'])->name('chart');
+Route::get('/textimg', [App\Http\Controllers\HomeController::class, 'textimg'])->name('textimg');
 Route::post('/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
 
 Route::group(['prefix' => 'admin'], function () {
